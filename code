@@ -1,5 +1,7 @@
+# in order to create the manager i imported tkinter.
 from tkinter import *
 
+# all the fonts and colors that used in this program are bellow
 small_font_style = ('Arial', 16)
 large_font_style = ('Arial', 16, 'bold')
 foods_font_style = ('arial', 15, 'bold')
@@ -18,31 +20,40 @@ off_white = '#F8FAFF'
 class RestaurantManager:
 
     def __init__(self):
+        # creating the page the user sees.
         self.window = Tk()
         self.window.title('Restaurant manager')
         self.window.geometry("1000x500")
         self.window.resizable(0, 0)
 
+        # the variables needed across the class.
         self.price_with_tax = '0'
         self.price_no_tax = "0"
         self.chosen_food_text = 'none'
         self.price_text = '0'
         self.number_text = '0'
 
+        # two main frames are used to show the foods,drinks,etc and the other frame is used to show the foods chosen and the number .
+        # and the combination of all the prices of foods chosen multiplied by their number.
         self.food_frame = self.create_food_frame()
         self.price_frame = self.create_price_frame()
-        self.no_tax, self.with_tax, self.chosen_food, self.number, self.price, self.food_label, self.number_label,\
-             self.price_label = self.create_price_labels()
+        self.no_tax, self.with_tax, self.chosen_food, self.number, self.price, self.food_label, self.number_label, \
+        self.price_label = self.create_price_labels()
 
+        # the foods in the food column.
         self.foods = {
             "pizza:70000T": (1, 0), "hamburger:50000T": (3, 0), "soup:55000T": (5, 0),
             "sandwich:40000T": (7, 0), "pasta:65000T": (9, 0),
         }
+        # buttons for choosing the desired food.
         self.create_food_buttons()
+
+        # drinks in the drinks column
         self.drinks = {
             "pepsi:10000T": (1, 1), "coca_cola:10000T": (3, 1), "water:4000T": (5, 1),
             'energy drink:15000T': (7, 1), 'juice:8000T': (9, 1)
         }
+        # buttons for choosing the desired drinks.
         self.create_drinks_buttons()
         self.appetizer = {
             "french fries:30000T": (1, 2), "ice cream:20000T": (3, 2), "garlic bread:35000T": (5, 2),
@@ -51,14 +62,18 @@ class RestaurantManager:
         self.create_appetizer_buttons()
         self.create_price_button()
 
+        # creating the rows size
         self.food_frame.rowconfigure(0, weight=1)
 
+        # creating the rows using for loop.
         for x in range(1, 11):
             self.food_frame.rowconfigure(x, weight=1)
 
+        # creating the column using for loop.
         for x in range(0, 3):
             self.food_frame.columnconfigure(x, weight=1)
 
+        # the boxes bellow the food,drink,appetizer buttons that will show the number of times the buttons id pushed.
         self.e_pizza = Entry(self.food_frame, font=e_box_font, borderwidth=1)
         self.e_hamburger = Entry(self.food_frame, font=e_box_font, borderwidth=1)
         self.e_soup = Entry(self.food_frame, font=e_box_font, borderwidth=1)
@@ -82,11 +97,13 @@ class RestaurantManager:
         self.appetizer_list = [self.e_french_fries, self.e_ice_cream, self.e_garlic_bread, self.e_salad,
                                self.e_chips_and_cheese]
 
+        # creating the all the enter boxes at once
         self.create_food_entry_boxes()
         self.create_drink_entry_boxes()
         self.create_appetizer_entry_boxes()
         self.create_finish_button()
 
+        # the begining number in the entry boxes.
         self.num1 = 0
         self.num2 = 0
         self.num3 = 0
@@ -152,7 +169,7 @@ class RestaurantManager:
             button.grid(row=grid_value[0], column=grid_value[1], sticky=NSEW)
             a += 1
         food_label = Label(self.food_frame, text="FOODS", bg=soft_pink, font=menu_font, fg=deep_black, padx=20)
-        food_label.grid(row=0, column=0,  sticky=NSEW)
+        food_label.grid(row=0, column=0, sticky=NSEW)
 
     def create_drinks_buttons(self):
         a = 1
@@ -163,7 +180,7 @@ class RestaurantManager:
             button.grid(row=grid_value[0], column=grid_value[1], sticky=NSEW)
             a += 1
         drink_label = Label(self.food_frame, text="DRINKS", bg=soft_pink, font=menu_font, fg=deep_black, padx=20)
-        drink_label.grid(row=0, column=1,  sticky=NSEW)
+        drink_label.grid(row=0, column=1, sticky=NSEW)
 
     def create_appetizer_buttons(self):
         a = 1
@@ -174,7 +191,7 @@ class RestaurantManager:
             button.grid(row=grid_value[0], column=grid_value[1], sticky=NSEW)
             a += 1
         appetizer_label = Label(self.food_frame, text="APPETIZER", bg=soft_pink, font=menu_font, fg=deep_black, padx=20)
-        appetizer_label.grid(row=0, column=2,  sticky=NSEW)
+        appetizer_label.grid(row=0, column=2, sticky=NSEW)
 
     def create_food_entry_boxes(self):
         a = 2
@@ -300,14 +317,14 @@ class RestaurantManager:
             price = 70000
             self.price_label.insert(END, f'{price}t\n')
             self.get_text('end-8c', 'end-3c')
-            self.num1 = self.num*int(pizza)
+            self.num1 = self.num * int(pizza)
 
         if int(hamburger) > 0:
             self.food_label.insert(END, 'hamburger\n')
             price = 50000
             self.price_label.insert(END, f'{price}t\n')
             self.get_text('end-8c', 'end-3c')
-            self.num2 = self.num*int(hamburger)
+            self.num2 = self.num * int(hamburger)
 
         if int(soup) > 0:
             self.food_label.insert(END, 'soup\n')
@@ -342,7 +359,7 @@ class RestaurantManager:
             price = 10000
             self.price_label.insert(END, f'{price}t\n')
             self.get_text('end-8c', 'end-3c')
-            self.num7 = (self.num * int(coca))/2
+            self.num7 = (self.num * int(coca)) / 2
 
         if int(water) > 0:
             self.food_label.insert(END, 'water\n')
@@ -418,12 +435,12 @@ class RestaurantManager:
         self.zero()
 
     def update_total_price(self):
-        a = self.num1+self.num2+self.num3+self.num4+self.num5+self.num6+self.num7+self.num7+self.num8+self.num9
-        b = self.num10+self.num11+self.num12+self.num13+self.num14+self.num15
-        self.total_price = a+b
-        self.no_tax.config(text=str(self.total_price)+' t no tax')
-        tax = self.total_price+(self.total_price/4)
-        self.with_tax.config(text=str(tax)+' t with tax')
+        a = self.num1 + self.num2 + self.num3 + self.num4 + self.num5 + self.num6 + self.num7 + self.num7 + self.num8 + self.num9
+        b = self.num10 + self.num11 + self.num12 + self.num13 + self.num14 + self.num15
+        self.total_price = a + b
+        self.no_tax.config(text=str(self.total_price) + ' t no tax')
+        tax = self.total_price + (self.total_price / 4)
+        self.with_tax.config(text=str(tax) + ' t with tax')
 
     def get_text(self, first, end):
         self.num = int(self.price_label.get(first, end))
